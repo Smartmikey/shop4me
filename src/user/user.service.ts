@@ -1,65 +1,63 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
-import { LoginInput, UserInput } from './user.input';
-import { Token, UserType } from './user.type';
+import { UserInput } from './user.input';
+import { UserType } from './user.type';
 import * as bcrypt from 'bcrypt'
 import {v4 as uuid} from 'uuid'
 import { JwtService } from '@nestjs/jwt';
-import { jwtSecret } from "../constants";
+import { OrderService } from 'src/order/order.service';
+
 @Injectable()
 export class UserService {
     constructor (
         @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
-        private readonly jwtService: JwtService
         ){}
 
         async createUser (userInput: UserInput): Promise<UserType> {
-            const {email, username, password }= userInput
-            const lowerCaseEmail = email.toLowerCase()
+            // let {email, username, password }= userInput
+            const lowerCaseEmail = userInput.email.toLowerCase()
 
-            const hashedPassword = await  bcrypt.hash(password, 10)
+            const hashedPassword = await  bcrypt.hash(userInput.password, 10)
 
             const user = this.userRepository.create({
                 id: uuid(),
-                username,
+                username: userInput.username,
                 email: lowerCaseEmail,
                 password: hashedPassword,
                 role: "user",
+                orders: []
                 
             })
-            return this.userRepository.save(user)
+            this.userRepository.save(user)
+
+           const {password, ...result} = user
+           console.log(result);
+           
+           return result
         }
 
-        public async getUserByEmail(email: string): Promise<UserType> {
+         async getUserByEmail(email: string): Promise<UserType> {
             return await this.userRepository.findOne({
                 email
             })
         }
-        public async getUser(id: string): Promise<UserType> {
+         async getUser(id: string): Promise<UserType> {
             return await this.userRepository.findOne({
                 id
             })
         }
 
-        // async login(loginDetails: LoginInput): Promise<Token> {
-        //     const {username, password} = loginDetails
+        async getUsers(): Promise<UserType[]> {
+            return await this.userRepository.find()
+        }
 
-        //     const user = await this.userRepository.findOne({
-        //         username
-        //     })
+        async addOrder(userId:string, orderId: string): Promise<UserType> {
+            const userOrder = await this.getUser(userId)
 
-        //     if(!user) throw new Error("Username does not exist")
-
-        //     const valid = await bcrypt.compare(password, user.password)
-        //     if(!valid) throw new Error("password is incorrect")
-            
-        //     const payload = { userId: user.id, jwtSecret };
-        //     return {
-        //     token: this.jwtService.sign(payload)
-        //     };
-        // }
-
-        // async
+            userOrder.orders =[...userOrder.orders, orderId]
+            return this.userRepository.save(userOrder)
+        }
+        
 }

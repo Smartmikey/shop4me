@@ -15,6 +15,9 @@ export class UserEntity {
     username: string;
 
     @Column()
+    orders?: string[]
+
+    @Column()
     password: string;
 
     @Column()
