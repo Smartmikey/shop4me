@@ -16,6 +16,7 @@ export class OrderResolver {
         private orderService: OrderService,
     ){}
 
+    // create order
     @Mutation(returns => orderType)
     @UseGuards(GqlAuthGuard)
     createOrder( 
@@ -25,11 +26,13 @@ export class OrderResolver {
         return this.orderService.createOrder(user, options)
     }
 
+    // Query all order
     @Query(returns => [orderType])
     getOrders(){
         return this.orderService.getOrders()
     }
 
+    // query order by ID
     @Query(returns => orderType)
     getOrder(
         @Args("id") id: string
@@ -37,6 +40,7 @@ export class OrderResolver {
         return  this.orderService.getOrder(id)
     }
 
+    // update the order status
     @Mutation(returns => orderType)
     @UseGuards(GqlAuthGuard)
     updateOrderStatus(
@@ -47,6 +51,8 @@ export class OrderResolver {
         return this.orderService.updateOrderStatus(options)
     }
 
+    // this code resolves the user field of the order schema
+    // it works perfectly
     @ResolveField()
     userId(@Parent() order: orderType) {
         return this.userService.getUser(order.userId)

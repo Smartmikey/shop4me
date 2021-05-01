@@ -18,6 +18,7 @@ export class OrderService {
         
     ){}
 
+    // create an order
     async createOrder(user, options: OrderInput) : Promise<orderType> {
         const {desc, name, url, weight, price, imageUrl} = options
         const order = this.orderRepository.create({
@@ -33,20 +34,25 @@ export class OrderService {
 
         })
 
+        // adding the order ID to the user who made the order
         this.userService.addOrder(user.id, order.id)
         
         return this.orderRepository.save(order)
     }
 
-    
+    // Query all orders
     async getOrders(): Promise<orderType[]>{
         return await this.orderRepository.find()
     }
 
+    // get order by ID
     async getOrder(id: string) : Promise<orderType> {
         return await this.orderRepository.findOne({id})
     }
 
+    // this function is used in the user.resolver file. it's supposed to 
+    // return the orders a user made. even though it logs out well here, it still 
+    //  the result isn't pushed to the user.resolver file, so it's returning error
     async getManyOrders(orderId: string[]): Promise<orderType[]>{
         return  this.orderRepository.find({
             where: {
@@ -58,6 +64,9 @@ export class OrderService {
 
         
     }
+
+    // this function helps the admin update the status of the order
+    // I'll change this to enum later, but need to get everything working first
     async updateOrderStatus(options: updateOrderInput) {
         const {orderId, status} = options
 
