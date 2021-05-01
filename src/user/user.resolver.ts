@@ -14,7 +14,7 @@ constructor(
     private userService: UserService,
     private orderService: OrderService
 ){}
-
+    // create a user
     @Mutation(returns => UserType)
     createUser(
         @Args("UserInput") UserInput: UserInput,
@@ -22,6 +22,7 @@ constructor(
         return this.userService.createUser(UserInput)
     }
 
+    // query to return a single user
     @Query(returns => UserType)
     getUser(
         @Args("id") id: string,
@@ -29,11 +30,15 @@ constructor(
         return this.userService.getUser(id)
     }
 
+    // query all the users
     @Query(returns => [UserType])
     getUsers(){
         return this.userService.getUsers()
     }
 
+    // to resolve the order field of the user type.(currently not returning the data
+    // even though the data is being returned by the order.service where the function is. 
+    // I'm hoping its a problem with the circular dependency)
     @ResolveField()
     async orders(@Parent() user: UserType){
         return this.orderService.getManyOrders(user.orders)

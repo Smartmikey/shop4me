@@ -15,10 +15,12 @@ export class UserService {
         @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
         ){}
 
+        // this create a user
         async createUser (userInput: UserInput): Promise<UserType> {
             // let {email, username, password }= userInput
             const lowerCaseEmail = userInput.email.toLowerCase()
 
+            // hashing the password
             const hashedPassword = await  bcrypt.hash(userInput.password, 10)
 
             const user = this.userRepository.create({
@@ -32,27 +34,34 @@ export class UserService {
             })
             this.userRepository.save(user)
 
+            // extracting hashed password so i dont return it in the query
            const {password, ...result} = user
            console.log(result);
            
            return result
         }
 
+        // this function query a user by email
          async getUserByEmail(email: string): Promise<UserType> {
             return await this.userRepository.findOne({
                 email
             })
         }
+
+        // // this function query a user by id
          async getUser(id: string): Promise<UserType> {
             return await this.userRepository.findOne({
                 id
             })
         }
 
+        // query all users
         async getUsers(): Promise<UserType[]> {
             return await this.userRepository.find()
         }
 
+        // I used this function in the order.service to attach the order Id
+        // to the user who made the order, so i get the userId and the order Id
         async addOrder(userId:string, orderId: string): Promise<UserType> {
             const userOrder = await this.getUser(userId)
 
