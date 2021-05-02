@@ -8,6 +8,8 @@ import { Auth } from './auth';
 import { OrderModule } from './order/order.module';
 import { OrderEntity } from './order/order.entity';
 import { StatusEntity } from './order-status/status.entity';
+import { CategoryModule } from './category/category.module';
+import { StoreModule } from './store/store.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -23,6 +25,8 @@ import { StatusEntity } from './order-status/status.entity';
     UserModule,
     AuthModule,
     OrderModule,
+    CategoryModule,
+    StoreModule,
   ],
   providers: [Auth],
   

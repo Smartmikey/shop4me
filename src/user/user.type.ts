@@ -13,7 +13,7 @@ export class UserType {
     username: string;
 
 
-    @Field(type=> orderType, {nullable: true})
+    @Field(type=> [orderType], {nullable: true})
     orders?: string[]
 
     @Field({nullable: true})

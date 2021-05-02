@@ -15,7 +15,6 @@ import { UserService } from './user.service';
         JwtModule.register({
             secret: jwtSecret
         }),
-        forwardRef(()=>OrderModule),
         OrderModule
     ],
     providers: [
