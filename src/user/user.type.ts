@@ -21,6 +21,8 @@ export class UserType {
 
     @Field()
     role: string
+
+    
 }
 
 @ObjectType("token")

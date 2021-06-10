@@ -1,4 +1,38 @@
-import { Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { storeInput } from './store.input';
+import { StoreService } from './store.service';
+import { StoreType } from './store.type';
 
-@Resolver()
-export class StoreResolver {}
+@Resolver(of => StoreType)
+export class StoreResolver {
+    constructor(
+        private storeService: StoreService
+    ){}
+
+    @Mutation(returns=> StoreType)
+    createStore(
+        @Args("options") options: storeInput,
+    ) {
+        return this.storeService.createstore(options)
+    }
+
+    @Mutation(returns=> StoreType)
+    deleteStore(
+        @Args("id")id: string) {
+        return this. storeService.deletestore(id)
+    }
+
+
+    @Query(returns=> [StoreType])
+    getStores(){
+        return this.storeService.getStores()
+    }
+
+    @Query(returns=> StoreType)
+    getstore(
+        @Args("id") id: string,
+    ){
+        return this.storeService.getStore(id)
+    }
+
+}

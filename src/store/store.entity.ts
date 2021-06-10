@@ -1,7 +1,7 @@
 import { Column, Entity, ObjectIdColumn } from "typeorm"
 
 @Entity()
-export class StoreType {
+export class StoreEntity {
     
     @ObjectIdColumn()
     _id: string

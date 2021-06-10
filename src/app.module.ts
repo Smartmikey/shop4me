@@ -10,6 +10,8 @@ import { OrderEntity } from './order/order.entity';
 import { StatusEntity } from './order-status/status.entity';
 import { CategoryModule } from './category/category.module';
 import { StoreModule } from './store/store.module';
+import { CategoryEntity } from './category/category.entity';
+import { StoreEntity } from './store/store.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -17,7 +19,7 @@ import { StoreModule } from './store/store.module';
       url: "mongodb://localhost/shopforme",
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [UserEntity, OrderEntity, StatusEntity]
+      entities: [UserEntity, OrderEntity, StatusEntity, CategoryEntity, StoreEntity]
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true

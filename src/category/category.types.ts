@@ -1,4 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import { StoreType } from "src/store/store.type";
 
 @ObjectType()
 export class CategoryType {
@@ -9,5 +10,8 @@ export class CategoryType {
     name: string
 
     @Field()
-    stores: string[]
+    slug: string
+
+    @Field(type=> [StoreType])
+    stores?: string[]
 }

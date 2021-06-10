@@ -12,9 +12,10 @@ export class AuthResolver {
 
     @Query(returns => Token)
     login(
-        @Args("loginInput") loginInput: LoginInput,
+        @Args("email") email: string, 
+        @Args("password") password: string,
     ){
-        return this.authService.login(loginInput)
+        return this.authService.login(email, password)
     }
 
     @Query(returns => UserType)

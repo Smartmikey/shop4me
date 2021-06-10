@@ -1,4 +1,4 @@
-import { Column, Entity, ObjectIdColumn } from "typeorm";
+import { Column, Entity, ObjectIdColumn, PrimaryColumn} from "typeorm";
 
 @Entity()
 
@@ -6,13 +6,16 @@ export class CategoryEntity {
     @ObjectIdColumn()
     _id: string
 
-    @Column()
+    @PrimaryColumn()
     id: string
 
     @Column()
     name: string
 
     @Column()
-    stores: string[]
+    slug: string
+
+    @Column()
+    stores?: string[]
 
 }

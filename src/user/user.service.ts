@@ -17,7 +17,7 @@ export class UserService {
 
         // this create a user
         async createUser (userInput: UserInput): Promise<UserType> {
-            // let {email, username, password }= userInput
+            // let { }= userInput
             const lowerCaseEmail = userInput.email.toLowerCase()
 
             // hashing the password
@@ -29,7 +29,8 @@ export class UserService {
                 email: lowerCaseEmail,
                 password: hashedPassword,
                 role: "user",
-                orders: []
+                orders: [],
+                
                 
             })
             this.userRepository.save(user)

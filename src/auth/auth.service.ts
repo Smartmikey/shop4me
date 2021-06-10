@@ -25,8 +25,8 @@ export class AuthService {
         return passwordIsValid ? user : null;
     }
 
-    async login(user: LoginInput): Promise<{ token: string }> {
-        const userlogin = await this.validate(user.email, user.password)
+    async login(email: string, password: string): Promise<{ token: string }> {
+        const userlogin = await this.validate(email, password)
 
         if(!userlogin) return 
         const payload = {
