@@ -45,10 +45,11 @@ export class OrderResolver {
     @UseGuards(GqlAuthGuard)
     updateOrderStatus(
         @CurrentUser() user: UserType,
-        @Args("options") options: updateOrderInput
+        @Args("orderId") orderId: string,
+        @Args("options", {nullable: true}) options: updateOrderInput
     ){
         if(user.role !== "admin") throw new Error("You cannot update order status")
-        return this.orderService.updateOrderStatus(options)
+        return this.orderService.updateOrderStatus(orderId, options)
     }
 
     // this code resolves the user field of the order schema

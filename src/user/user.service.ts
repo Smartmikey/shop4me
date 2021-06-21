@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { UserInput } from './user.input';
-import { UserType } from './user.type';
+import { UserType, UserUploadProfilePicType } from './user.type';
 import * as bcrypt from 'bcrypt'
 import {v4 as uuid} from 'uuid'
 import { JwtService } from '@nestjs/jwt';
@@ -13,22 +13,23 @@ import { OrderService } from 'src/order/order.service';
 export class UserService {
     constructor (
         @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
+        private readonly jwtService: JwtService
         ){}
 
         // this create a user
-        async createUser (userInput: UserInput): Promise<UserType> {
+        async createUser (userInput: UserInput): Promise<{token: string}> {
             // let { }= userInput
             const lowerCaseEmail = userInput.email.toLowerCase()
 
             // hashing the password
             const hashedPassword = await  bcrypt.hash(userInput.password, 10)
 
-            const user = this.userRepository.create({
+            const user = await this.userRepository.create({
                 id: uuid(),
                 username: userInput.username,
                 email: lowerCaseEmail,
                 password: hashedPassword,
-                role: "user",
+                role: "admin",
                 orders: [],
                 
                 
@@ -37,9 +38,15 @@ export class UserService {
 
             // extracting hashed password so i dont return it in the query
            const {password, ...result} = user
-           console.log(result);
-           
-           return result
+           const payload = {
+            email: user.email,
+            sub: user.id,
+
+            }
+
+            return {
+                token: this.jwtService .sign(payload),
+            }
         }
 
         // this function query a user by email
@@ -68,6 +75,14 @@ export class UserService {
 
             userOrder.orders =[...userOrder.orders, orderId]
             return this.userRepository.save(userOrder)
+        }
+
+        async uploadUserProfile(file: {}): Promise<UserUploadProfilePicType> {
+            // const {createReadStream, } = file
+            return {
+                success: true
+            }
+            
         }
         
 }

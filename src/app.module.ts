@@ -12,6 +12,7 @@ import { CategoryModule } from './category/category.module';
 import { StoreModule } from './store/store.module';
 import { CategoryEntity } from './category/category.entity';
 import { StoreEntity } from './store/store.entity';
+// import Upload from 'graphql-upload/public/Upload'
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -22,7 +23,13 @@ import { StoreEntity } from './store/store.entity';
       entities: [UserEntity, OrderEntity, StatusEntity, CategoryEntity, StoreEntity]
     }),
     GraphQLModule.forRoot({
-      autoSchemaFile: true
+      autoSchemaFile: true,
+      uploads: {
+        maxFileSize: 200000000, // 20 MB
+        maxFiles: 20,
+        maxFieldSize: 200
+      },
+      
     }),
     UserModule,
     AuthModule,

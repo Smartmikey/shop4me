@@ -1,6 +1,7 @@
 import { Field, InputType } from "@nestjs/graphql";
+import { Exclude } from "class-transformer";
 import { IsEmail, isNotEmpty, Max, Min } from "class-validator";
-
+// import { Upload } from "../scalars/upload.scalar";
 @InputType()
 export class UserInput {
 
@@ -30,3 +31,10 @@ export class LoginInput {
     @Field()
     password: string;
 }
+
+// @InputType()
+// export class UploadUserProfilePicInput {
+//     @Field()
+//     @Exclude()
+//     file : Upload
+// }

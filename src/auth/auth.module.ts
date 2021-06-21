@@ -14,7 +14,7 @@ import { AuthResolver } from './auth.resolver';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: jwtSecret,
-      signOptions: { expiresIn: '3600s' }
+      signOptions: { expiresIn: `${3600 * 24 * 14}s` }
     })
   ],
   providers: [AuthService, JwtStrategy, LocalStrategy, AuthResolver],

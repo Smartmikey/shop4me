@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { orderType } from "src/order/order.type";
+import { Stream } from "stream";
 
 @ObjectType("User")
 export class UserType {
@@ -27,6 +28,14 @@ export class UserType {
 
 @ObjectType("token")
 export class Token {
-    @Field()
+    @Field({nullable: true})
     token: string
 }
+
+@ObjectType('UserUploadProfilePicType')
+export class UserUploadProfilePicType {
+    @Field()
+    success : boolean;
+}
+
+

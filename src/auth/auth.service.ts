@@ -28,7 +28,7 @@ export class AuthService {
     async login(email: string, password: string): Promise<{ token: string }> {
         const userlogin = await this.validate(email, password)
 
-        if(!userlogin) return 
+        if(!userlogin) throw new Error("Invalid username or password")
         const payload = {
             email: userlogin.email,
             sub: userlogin.id,
@@ -44,7 +44,7 @@ export class AuthService {
         const decoded = this.jwtService.verify(token, {
             secret: jwtSecret
         })
-
+        
         const user = await this.userService.getUserByEmail(decoded.email);
 
         if (!user) {

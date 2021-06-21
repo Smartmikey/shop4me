@@ -20,7 +20,7 @@ export class AuthResolver {
 
     @Query(returns => UserType)
     verifyUser(
-        @Args("token") token: string,
+        @Args("token", {nullable: true}) token: string,
     ){
         return this.authService.verify(token)
     }

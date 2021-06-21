@@ -1,4 +1,5 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, Float, InputType, Int } from "@nestjs/graphql";
+import { IsUrl} from "class-validator";
 
 @InputType()
 export class OrderInput {
@@ -9,26 +10,28 @@ export class OrderInput {
     @Field()
     desc: string
 
-    @Field()
+    @Field(type=> Float)
     price: string
 
+    @IsUrl()
     @Field()
     url: string
     
+    @IsUrl()
     @Field()
     imageUrl: string
 
-    @Field()
-    weight: string
+    
 
 }
 
 @InputType()
 export class updateOrderInput {
-    @Field()
-    orderId: string
 
     @Field()
     status: string
+
+    @Field(type=> Int)
+    weight: string
 
 }
