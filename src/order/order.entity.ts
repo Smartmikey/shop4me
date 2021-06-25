@@ -15,6 +15,10 @@ export class OrderEntity {
     @Column()
     desc: string
 
+    // nullable date will be removed in production
+    // @Column()
+    // date?: string
+
     @Column()
     price: string
 
@@ -25,7 +29,7 @@ export class OrderEntity {
     status?: string
 
     @Column()
-    weight: string
+    weight?: string
     
     @Column()
     imageUrl: string

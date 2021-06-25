@@ -8,12 +8,14 @@ import * as bcrypt from 'bcrypt'
 import {v4 as uuid} from 'uuid'
 import { JwtService } from '@nestjs/jwt';
 import { OrderService } from 'src/order/order.service';
+import { UserDetailsService } from 'src/user-details/user-details.service';
 
 @Injectable()
 export class UserService {
     constructor (
         @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
-        private readonly jwtService: JwtService
+        private readonly jwtService: JwtService,
+        private userDetailsService: UserDetailsService
         ){}
 
         // this create a user
@@ -29,11 +31,13 @@ export class UserService {
                 username: userInput.username,
                 email: lowerCaseEmail,
                 password: hashedPassword,
-                role: "admin",
+                role: "user",
                 orders: [],
                 
                 
             })
+
+            this.userDetailsService.createUserDetails(user.id)
             this.userRepository.save(user)
 
             // extracting hashed password so i dont return it in the query

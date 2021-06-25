@@ -29,9 +29,9 @@ export class OrderInput {
 export class updateOrderInput {
 
     @Field()
-    status: string
+    status?: string
 
     @Field(type=> Int)
-    weight: string
+    weight?: string
 
 }

@@ -10,13 +10,15 @@ import { GraphQLUpload,   } from "apollo-server-express";
 // import { GraphQLUpload, FileUpload } from "graphql-upload";
 import { createWriteStream } from "fs";
 import { Upload,  } from "graphql-upload";
+import { UserDetailsService } from "src/user-details/user-details.service";
 
 @Resolver(of => UserType)
 export class UserResolver {
 constructor(
     // @Inject(forwardRef(()=> OrderService))
     private userService: UserService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private userDetailsService: UserDetailsService
 ){}
     // create a user
     @Mutation(returns => Token)
@@ -70,11 +72,14 @@ constructor(
         return this.userService.getUsers()
     }
 
-    // to resolve the order field of the user type.(currently not returning the data
-    // even though the data is being returned by the order.service where the function is. 
-    // I'm hoping its a problem with the circular dependency)
+    
     @ResolveField()
     async orders(@Parent() user: UserType){
         return this.orderService.getManyOrders(user.orders)
+    }
+
+    @ResolveField()
+    async userDetails(@Parent() user: UserType){
+        return this.userDetailsService.getDetailsByUserId(user.id)
     }
 }

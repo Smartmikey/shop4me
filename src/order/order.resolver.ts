@@ -2,6 +2,7 @@ import { forwardRef, Inject, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
+import { UserDetailsService } from 'src/user-details/user-details.service';
 import { UserService } from 'src/user/user.service';
 import { UserType } from 'src/user/user.type';
 import { OrderInput, updateOrderInput } from './order.input';
@@ -14,6 +15,7 @@ export class OrderResolver {
         
         private userService: UserService,
         private orderService: OrderService,
+        private userDetailsService: UserDetailsService
     ){}
 
     // create order
@@ -39,6 +41,13 @@ export class OrderResolver {
     ) {
         return  this.orderService.getOrder(id)
     }
+    // query order by ID
+    @Query(returns => [orderType])
+    getOrderByStatus(
+        @Args("status") status: string,  
+    ) {
+        return  this.orderService.getOrderByStatus(status)
+    }
 
     // update the order status
     @Mutation(returns => orderType)
@@ -57,6 +66,11 @@ export class OrderResolver {
     @ResolveField()
     userId(@Parent() order: orderType) {
         return this.userService.getUser(order.userId)
+    }
+
+    @ResolveField()
+    async userDetails(@Parent() user: UserType){
+        return this.userDetailsService.getDetailsByUserId(user.id)
     }
 
     

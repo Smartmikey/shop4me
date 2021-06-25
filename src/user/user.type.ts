@@ -1,5 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { orderType } from "src/order/order.type";
+import { UserDetailsType } from "src/user-details/user-details.type";
 import { Stream } from "stream";
 
 @ObjectType("User")
@@ -17,6 +18,9 @@ export class UserType {
     @Field(type=> [orderType], {nullable: true})
     orders?: string[]
 
+    @Field(type=> UserDetailsType, {nullable: true})
+    userDetails?: string
+    
     @Field({nullable: true})
     password?: string;
 

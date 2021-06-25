@@ -21,6 +21,7 @@ export class OrderService {
     // create an order
     async createOrder(user, options: OrderInput) : Promise<orderType> {
         const {desc, name, url, price, imageUrl} = options
+        // let orderDate = ()=>  new Date(Date.now()).toUTCString()
         const order = this.orderRepository.create({
             id: UUID(),
             desc,
@@ -29,7 +30,9 @@ export class OrderService {
             imageUrl,
             price,
             userId: user.id,
-            status: "processing"
+            status: "processing",
+            payment: "not paid",
+            // date: orderDate
 
         })
 
@@ -47,6 +50,13 @@ export class OrderService {
     // get order by ID
     async getOrder(id: string) : Promise<orderType> {
         return await this.orderRepository.findOne({id})
+    }
+    // get order by status
+    async getOrderByStatus( status: string) : Promise<orderType[]> {
+        
+        return await this.orderRepository.find(
+            {status}
+        )
     }
 
     // this function is used in the user.resolver file. it's supposed to 

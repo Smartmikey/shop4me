@@ -12,6 +12,9 @@ import { CategoryModule } from './category/category.module';
 import { StoreModule } from './store/store.module';
 import { CategoryEntity } from './category/category.entity';
 import { StoreEntity } from './store/store.entity';
+// import { DateScalar } from './scalars/date.scalar';
+import { UserDetailsModule } from './user-details/user-details.module';
+import { userDetailsEntity } from './user-details/user-details.entity';
 // import Upload from 'graphql-upload/public/Upload'
 @Module({
   imports: [
@@ -20,7 +23,7 @@ import { StoreEntity } from './store/store.entity';
       url: "mongodb://localhost/shopforme",
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [UserEntity, OrderEntity, StatusEntity, CategoryEntity, StoreEntity]
+      entities: [UserEntity, OrderEntity, StatusEntity, CategoryEntity, StoreEntity, userDetailsEntity]
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
@@ -29,6 +32,9 @@ import { StoreEntity } from './store/store.entity';
         maxFiles: 20,
         maxFieldSize: 200
       },
+      buildSchemaOptions: {
+        dateScalarMode: 'isoDate',
+      }
       
     }),
     UserModule,
@@ -36,6 +42,7 @@ import { StoreEntity } from './store/store.entity';
     OrderModule,
     CategoryModule,
     StoreModule,
+    UserDetailsModule,
   ],
   providers: [Auth],
   
