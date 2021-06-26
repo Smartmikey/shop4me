@@ -5,6 +5,7 @@ import { CategoryEntity } from './category.entity';
 import { addStoreInput, CategoryInput, UpdateCategoryInput, UpdateCategorySlugInput } from './Category.input';
 import {v4 as uuid} from "uuid"
 import { CategoryType } from './category.types';
+import { SuccessType } from 'src/order/order.type';
 
 @Injectable()
 export class CategoryService {
@@ -29,12 +30,12 @@ export class CategoryService {
         return this.categoryRepository.save(newCategory)
     }
 
-    async deleteCategory(id: string): Promise<string> {
+    async deleteCategory(id: string): Promise<SuccessType> {
 
         const deleteCategories = await this.categoryRepository.findOne({id})
 
         await this.categoryRepository.remove(deleteCategories)
-        return "Sucessfully deleted"
+        return {message: "Sucessfully deleted"}
 
     }
 

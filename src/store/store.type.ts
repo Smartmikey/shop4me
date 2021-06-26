@@ -12,7 +12,10 @@ export class StoreType {
     @Field()
     url: string
     
-    @Field()
-    logoUrl: string
+    @Field({nullable: true})
+    logoUrl?: string
+
+    @Field(type=> [String], {nullable: true})
+    categoryIds: String[]
 
 }

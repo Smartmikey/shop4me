@@ -1,4 +1,4 @@
-import { Field, Float, ID, Int, ObjectType,  } from "@nestjs/graphql";
+import { Field, Float, ID, Int,  ObjectType,  } from "@nestjs/graphql";
 import { StatusType } from "src/order-status/status.type";
 import { UserType } from "src/user/user.type";
 
@@ -13,8 +13,8 @@ export class orderType {
     @Field()
     desc: string
     
-    // @Field( {nullable: true} )
-    // date?: Date
+    @Field( {nullable: true} )
+    date?: string
 
     @Field(type=> Float)
     price: string
@@ -25,8 +25,11 @@ export class orderType {
     @Field( {nullable: true})
     status?: string
 
-    @Field(type=> Int, {nullable: true})
+    @Field(type=> Float, {nullable: true})
     weight?: string
+
+    @Field(type=> Float, {nullable: true})
+    shippingFee?: string
 
     @Field()
     imageUrl: string    
@@ -38,4 +41,10 @@ export class orderType {
     userId: string
 
 
+}
+
+@ObjectType()
+export class SuccessType {
+    @Field()
+    message: string
 }

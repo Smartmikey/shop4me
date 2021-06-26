@@ -21,17 +21,21 @@ export class OrderInput {
     @Field()
     imageUrl: string
 
-    
+    @Field()
+    date: string
 
 }
 
 @InputType()
 export class updateOrderInput {
 
-    @Field()
+    @Field( {nullable: true})
     status?: string
 
-    @Field(type=> Int)
+    @Field( type=> Float,{nullable: true})
     weight?: string
+
+    @Field(type=> Float, {nullable: true})
+    shippingFee?: string
 
 }

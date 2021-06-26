@@ -16,8 +16,11 @@ export class OrderEntity {
     desc: string
 
     // nullable date will be removed in production
-    // @Column()
-    // date?: string
+    @Column()
+    date?: string
+    
+    @Column()
+    shippingFee?: string
 
     @Column()
     price: string

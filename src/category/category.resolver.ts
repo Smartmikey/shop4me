@@ -1,4 +1,5 @@
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { SuccessType } from 'src/order/order.type';
 import { StoreService } from 'src/store/store.service';
 import { CategoryInput, UpdateCategoryInput, UpdateCategorySlugInput } from './Category.input';
 import { CategoryService } from './category.service';
@@ -18,7 +19,7 @@ export class CategoryResolver {
         return this.categoryService.createCategory(options)
     }
 
-    @Mutation(returns=> CategoryType)
+    @Mutation(returns=> SuccessType)
     deleteCategory(
         @Args("id")id: string) {
         return this. categoryService.deleteCategory(id)

@@ -7,7 +7,7 @@ import { UserService } from 'src/user/user.service';
 import { UserType } from 'src/user/user.type';
 import { OrderInput, updateOrderInput } from './order.input';
 import { OrderService } from './order.service';
-import { orderType } from './order.type';
+import { orderType, SuccessType } from './order.type';
 
 @Resolver(of => orderType)
 export class OrderResolver {
@@ -52,13 +52,24 @@ export class OrderResolver {
     // update the order status
     @Mutation(returns => orderType)
     @UseGuards(GqlAuthGuard)
-    updateOrderStatus(
+    updateOrder(
         @CurrentUser() user: UserType,
         @Args("orderId") orderId: string,
         @Args("options", {nullable: true}) options: updateOrderInput
     ){
         if(user.role !== "admin") throw new Error("You cannot update order status")
-        return this.orderService.updateOrderStatus(orderId, options)
+        return this.orderService.updateOrder(orderId, options)
+    }
+
+    @Mutation(returns => SuccessType)
+    @UseGuards(GqlAuthGuard)
+    deleteOrder (
+        @CurrentUser() user: UserType,
+        @Args("id") id: string,
+
+    ){
+        if(user.role !== "admin") throw new Error("You cannot update order status")
+        return this.orderService.deleteOrder(id)
     }
 
     // this code resolves the user field of the order schema
@@ -67,11 +78,5 @@ export class OrderResolver {
     userId(@Parent() order: orderType) {
         return this.userService.getUser(order.userId)
     }
-
-    @ResolveField()
-    async userDetails(@Parent() user: UserType){
-        return this.userDetailsService.getDetailsByUserId(user.id)
-    }
-
     
 }

@@ -20,7 +20,7 @@ export class OrderService {
 
     // create an order
     async createOrder(user, options: OrderInput) : Promise<orderType> {
-        const {desc, name, url, price, imageUrl} = options
+        const {desc, name, url, price, imageUrl, date} = options
         // let orderDate = ()=>  new Date(Date.now()).toUTCString()
         const order = this.orderRepository.create({
             id: UUID(),
@@ -32,7 +32,7 @@ export class OrderService {
             userId: user.id,
             status: "processing",
             payment: "not paid",
-            // date: orderDate
+            date
 
         })
 
@@ -76,13 +76,23 @@ export class OrderService {
 
     // this function helps the admin update the status of the order
     // I'll change this to enum later, but need to get everything working first
-    async updateOrderStatus(orderId: string, options: updateOrderInput) {
-        const {status} = options
+    async updateOrder(orderId: string, options: updateOrderInput) {
+        const {status, weight, shippingFee} = options
 
         const order = await this.orderRepository.findOne({id:orderId})
 
-        order.status = status
+        status != null && status != "" ? order.status = status : order.status
+        weight != null && weight != "" ? order.weight = weight : order.weight
+        shippingFee != null && shippingFee != "" ? order.shippingFee = shippingFee : order.shippingFee
 
         return this.orderRepository.save(order)
+    }
+
+    async deleteOrder(id: string): Promise<{message: string}> {
+        this.orderRepository.delete({id})
+
+        return {
+            message: "successful"
+        }
     }
 }

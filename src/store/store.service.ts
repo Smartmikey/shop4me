@@ -6,6 +6,7 @@ import {v4 as uuid} from "uuid"
 import { storeInput } from './store.input';
 import { StoreType } from './store.type';
 import { CategoryService } from 'src/category/category.service';
+import { SuccessType } from 'src/order/order.type';
 
 @Injectable()
 export class StoreService {
@@ -15,32 +16,34 @@ export class StoreService {
     ){}
 
     async createstore(options: storeInput): Promise<StoreType> {
-        const {name, url, logoUrl, categoryId} = options
-
-        const store = await this.storeRepository.findOne({name})
-
+        const {name, url, logoUrl, categoryIds} = options
+        
+        const store = await this.storeRepository.findOne({where: {name}})
+        console.log(store);
+        
         if(store) throw new Error("This store name already exist")
 
         const newstore =this.storeRepository.create({
             id: uuid(), 
             name: name.toLowerCase(),
-            url: url.toLowerCase()
-           
+            url: url.toLowerCase(),
+           logoUrl,
+           categoryIds
         })
 
-        this.categoryService.addStore({
-            id: categoryId,
-            storeId: newstore.id,
-        })
+        // this.categoryService.addStore({
+        //     id: categoryId,
+        //     storeId: newstore.id,
+        // })
         return this.storeRepository.save(newstore)
     }
 
-    async deletestore(id: string): Promise<string> {
+    async deletestore(id: string): Promise<SuccessType> {
 
         const deleteCategories = await this.storeRepository.findOne({id})
 
         await this.storeRepository.remove(deleteCategories)
-        return "Sucessfully deleted"
+        return {message: "Sucessfully deleted"}
 
     }
 

@@ -15,6 +15,6 @@ export class storeInput {
     @Field()
     logoUrl: string
 
-    @Field()
-    categoryId: string
+    @Field(type=> [String])
+    categoryIds: string[]
 }

@@ -14,9 +14,7 @@ export class UserDetailsService {
 
     async updateUserDetails(userId, options: UserDetailsInput): Promise<UserDetailsType > {
         let detailsExist = await this.userDetailsRepository.findOne({userId})
-            console.log("Options: ",options);
-            
-                   
+                               
             options.firstName != "" && options.firstName != null ? detailsExist.firstName = options.firstName : detailsExist.firstName
             options.lastName != "" && options.lastName != null? detailsExist.lastName = options.lastName : detailsExist.lastName
             options.dob != "" && options.dob != null? detailsExist.dob = options.dob : detailsExist.dob
@@ -46,6 +44,6 @@ export class UserDetailsService {
         return this.userDetailsRepository.save(details)
     }
     async getDetailsByUserId(userId: string): Promise<UserDetailsType> {
-        return this.userDetailsRepository.findOne({userId})
+        return await this.userDetailsRepository.findOne({userId})
     } 
 }
