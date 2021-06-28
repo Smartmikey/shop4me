@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { StoreEntity } from './store.entity';
 import {v4 as uuid} from "uuid"
-import { storeInput } from './store.input';
+import { storeInput, UpdateStoreInput } from './store.input';
 import { StoreType } from './store.type';
 import { CategoryService } from 'src/category/category.service';
 import { SuccessType } from 'src/order/order.type';
@@ -16,13 +16,13 @@ export class StoreService {
     ){}
 
     async createstore(options: storeInput): Promise<StoreType> {
-        const {name, url, logoUrl, categoryIds} = options
+        let {name, url, logoUrl, categoryIds} = options
         
         const store = await this.storeRepository.findOne({where: {name}})
         console.log(store);
         
         if(store) throw new Error("This store name already exist")
-
+        categoryIds ? categoryIds : categoryIds = []
         const newstore =this.storeRepository.create({
             id: uuid(), 
             name: name.toLowerCase(),
@@ -47,12 +47,17 @@ export class StoreService {
 
     }
 
-    // async updatestore(options: storeInput) : Promise<StoreType> {
+    async updatestore(id: string, options: UpdateStoreInput) : Promise<StoreType> {
 
-    //     const { name, url, logoUrl} = options
+        const {name, url, logoUrl, categoryIds} = options
+        let store = await this.storeRepository.findOne({id})
+        name != "" && name  != null ? store.name = name : ""
+        url != "" && url  != null ? store.url = url : ""
+        logoUrl != "" && logoUrl != null ? store.logoUrl = logoUrl : ""
+        categoryIds != [] && categoryIds  != null ? store.categoryIds = [...store.categoryIds, ...categoryIds] : ""
 
-    //     return this.storeRepository.save()
-    // }
+        return this.storeRepository.save(store)
+    }
 
     async getStores(): Promise<StoreType[]> {
         return await this.storeRepository.find()

@@ -18,3 +18,20 @@ export class storeInput {
     @Field(type=> [String])
     categoryIds: string[]
 }
+@InputType()
+export class UpdateStoreInput {
+    
+    @Field( {nullable: true})
+    name?: string
+
+    @Field( {nullable: true})
+    @IsUrl()
+    url?: string
+
+    @IsUrl()
+    @Field( {nullable: true})
+    logoUrl?: string
+
+    @Field(type => [String], {nullable: true})
+    categoryIds: string[]
+}

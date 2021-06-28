@@ -1,4 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import { CategoryType } from "src/category/category.types";
 
 @ObjectType()
 export class StoreType {
@@ -6,16 +7,16 @@ export class StoreType {
     @Field()
     id: string
     
-    @Field()
+    @Field({nullable: true})
     name: string
     
-    @Field()
+    @Field({nullable: true})
     url: string
     
     @Field({nullable: true})
     logoUrl?: string
 
-    @Field(type=> [String], {nullable: true})
-    categoryIds: String[]
+    @Field(type=> [CategoryType] ,{nullable: true})
+    categoryIds: string[]
 
 }
