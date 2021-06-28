@@ -54,7 +54,9 @@ export class StoreService {
         name != "" && name  != null ? store.name = name : ""
         url != "" && url  != null ? store.url = url : ""
         logoUrl != "" && logoUrl != null ? store.logoUrl = logoUrl : ""
-        categoryIds != [] && categoryIds  != null ? store.categoryIds = [...store.categoryIds, ...categoryIds] : ""
+        console.log("category received:", categoryIds);
+        
+        categoryIds != [] && categoryIds  != null ? store.categoryIds = categoryIds : ""
 
         return this.storeRepository.save(store)
     }
