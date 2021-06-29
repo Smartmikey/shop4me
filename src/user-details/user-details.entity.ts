@@ -15,13 +15,16 @@ export class userDetailsEntity {
     firstName: string
 
     @Column()
-    lastName: String
+    lastName: string
 
     @Column()
     dob: string
 
     @Column()
     address: string
+
+    @Column()
+    phone: string
 
     @Column()
     city: string

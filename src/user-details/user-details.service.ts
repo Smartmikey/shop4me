@@ -19,6 +19,7 @@ export class UserDetailsService {
             options.lastName != "" && options.lastName != null? detailsExist.lastName = options.lastName : detailsExist.lastName
             options.dob != "" && options.dob != null? detailsExist.dob = options.dob : detailsExist.dob
             options.address != "" && options.address != null? detailsExist.address = options.address : detailsExist.address
+            options.phone != "" && options.phone != null? detailsExist.phone = options.phone : detailsExist.phone
             options.city != "" && options.city != null? detailsExist.city = options.city : detailsExist.city
             options.state != "" && options.state != null? detailsExist.state = options.state : detailsExist.state
             options.nearestBusStop != "" && options.nearestBusStop != null? detailsExist.nearestBusStop = options.nearestBusStop : detailsExist.nearestBusStop
@@ -37,6 +38,7 @@ export class UserDetailsService {
             country: "Nigeria",
             state: "",
             dob: "",
+            phone: "",
             nearestBusStop: "",
             userId
         })

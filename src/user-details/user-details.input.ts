@@ -1,4 +1,5 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, InputType, Int } from "@nestjs/graphql";
+import { isInt } from "class-validator";
 
 @InputType()
 
@@ -8,13 +9,16 @@ export class UserDetailsInput {
     firstName: string
 
     @Field({nullable: true})
-    lastName: String
+    lastName: string
 
     @Field({nullable: true})
     dob: string
 
     @Field({nullable: true})
     address: string
+
+    @Field(type=> Int, {nullable: true})
+    phone: string
 
     @Field({nullable: true})
     city: string

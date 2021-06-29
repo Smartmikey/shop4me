@@ -6,6 +6,7 @@ import { OrderInput, updateOrderInput } from './order.input';
 import { orderType } from './order.type';
 import {v4 as UUID} from 'uuid'
 import { UserService } from 'src/user/user.service';
+import { SendEmail } from 'src/utils/sendEmail';
 
 
 
@@ -38,7 +39,7 @@ export class OrderService {
 
         // adding the order ID to the user who made the order
         this.userService.addOrder(user.id, order.id)
-        
+        await SendEmail("demo@email.com", order.name)
         return this.orderRepository.save(order)
     }
 

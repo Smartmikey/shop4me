@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Field, ID, Int, ObjectType } from "@nestjs/graphql";
 
 @ObjectType("UserDetails")
 export class UserDetailsType {
@@ -12,13 +12,16 @@ export class UserDetailsType {
     firstName?: string
 
     @Field({nullable: true})
-    lastName?: String
+    lastName?: string
 
     @Field({nullable: true})
     dob?: string
 
     @Field({nullable: true})
     address?: string
+
+    @Field(type=> Int, {nullable: true})
+    phone?: string
 
     @Field({nullable: true})
     city?: string
