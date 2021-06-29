@@ -15,6 +15,7 @@ import { StoreEntity } from './store/store.entity';
 // import { DateScalar } from './scalars/date.scalar';
 import { UserDetailsModule } from './user-details/user-details.module';
 import { userDetailsEntity } from './user-details/user-details.entity';
+import { TransactionModule } from './transaction/transaction.module';
 // import Upload from 'graphql-upload/public/Upload'
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { userDetailsEntity } from './user-details/user-details.entity';
     CategoryModule,
     StoreModule,
     UserDetailsModule,
+    TransactionModule,
   ],
   providers: [Auth],
   
