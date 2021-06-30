@@ -1,4 +1,7 @@
 import { Field, ObjectType } from "@nestjs/graphql"
+import { type } from "os"
+import { orderType } from "src/order/order.type"
+import { UserType } from "src/user/user.type"
 
 @ObjectType()
 export class TransactionType {
@@ -23,4 +26,10 @@ export class TransactionType {
 
     @Field()
     date: string
+
+    @Field(type=> UserType)
+    userId: string
+
+    @Field(type=> orderType)
+    orderId: string
 }

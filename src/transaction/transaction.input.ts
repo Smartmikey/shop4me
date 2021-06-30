@@ -2,9 +2,6 @@ import { Field, InputType } from "@nestjs/graphql"
 
 @InputType()
 export class TransactionInput {
-    
-    @Field()
-    id: string
 
     @Field()
     amount: string
@@ -23,4 +20,10 @@ export class TransactionInput {
 
     @Field()
     date: string
+
+    @Field()
+    userId: string
+
+    @Field()
+    orderId: string
 }

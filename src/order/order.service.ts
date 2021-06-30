@@ -25,15 +25,11 @@ export class OrderService {
         // let orderDate = ()=>  new Date(Date.now()).toUTCString()
         const order = this.orderRepository.create({
             id: UUID(),
-            desc,
-            name,
-            url,
-            imageUrl,
-            price,
+            ...options,
             userId: user.id,
             status: "processing",
             payment: "not paid",
-            date
+            
 
         })
 

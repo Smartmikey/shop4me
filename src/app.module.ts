@@ -16,15 +16,17 @@ import { StoreEntity } from './store/store.entity';
 import { UserDetailsModule } from './user-details/user-details.module';
 import { userDetailsEntity } from './user-details/user-details.entity';
 import { TransactionModule } from './transaction/transaction.module';
+import { TransactionEntity } from './transaction/transaction.entity';
 // import Upload from 'graphql-upload/public/Upload'
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: "mongodb",
-      url: "mongodb://localhost/shopforme",
+      url: process.env.DB_URL,//"mongodb://localhost/shopforme",
       synchronize: true,
       useUnifiedTopology: true,
-      entities: [UserEntity, OrderEntity, StatusEntity, CategoryEntity, StoreEntity, userDetailsEntity]
+      entities: [UserEntity, OrderEntity, StatusEntity, 
+                  CategoryEntity, StoreEntity, userDetailsEntity, TransactionEntity]
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,

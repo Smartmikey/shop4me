@@ -25,4 +25,10 @@ export class TransactionEntity {
 
     @Column()
     date: string
+    
+    @Column()
+    userId: string
+    
+    @Column()
+    orderId: string
 }
