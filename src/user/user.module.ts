@@ -14,7 +14,7 @@ import { UserService } from './user.service';
             UserEntity
         ]),
         JwtModule.register({
-            secret: jwtSecret,
+            secret: `${process.env.JWT_SECRET}`,
             signOptions: { expiresIn: `${3600 * 24 * 14}s` }
 
         }),

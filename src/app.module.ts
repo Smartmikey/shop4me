@@ -22,7 +22,7 @@ import { TransactionEntity } from './transaction/transaction.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: "mongodb",
-      url: process.env.DB_URL,//"mongodb://localhost/shopforme",
+      url: process.env.DB_URL,
       synchronize: true,
       useUnifiedTopology: true,
       entities: [UserEntity, OrderEntity, StatusEntity, 
