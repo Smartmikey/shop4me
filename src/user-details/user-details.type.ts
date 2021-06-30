@@ -14,7 +14,7 @@ export class UserDetailsType {
     @Field({nullable: true})
     lastName?: string
 
-    @Field({nullable: true})
+    @Field({nullable: true})  
     dob?: string
 
     @Field({nullable: true})
