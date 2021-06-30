@@ -1,1 +1,1 @@
-web: nest start /src/main.ts
+web: node dist/main
