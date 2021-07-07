@@ -2,14 +2,14 @@ import { Column, Entity, ObjectIdColumn, PrimaryColumn } from "typeorm";
 
 @Entity("userDetails")
 export class userDetailsEntity {
-    @ObjectIdColumn()
-    _id: string
+    // @ObjectIdColumn()
+    // _id: string
 
     @PrimaryColumn()
-    id?: string
+    id: string
 
-    @Column()
-    userId?: string
+    @Column({nullable: true})
+    userId: string
     
     @Column()
     firstName: string
@@ -32,8 +32,8 @@ export class userDetailsEntity {
     @Column()
     state: string
 
-    @Column()
-    country?: string
+    @Column({nullable: true})
+    country: string
 
     @Column()
     nearestBusStop: string

@@ -3,8 +3,8 @@ import { Column, Entity, ObjectIdColumn, PrimaryColumn } from "typeorm";
 @Entity()
 
 export class OrderEntity {
-    @ObjectIdColumn()
-    _id: string
+    // @ObjectIdColumn()
+    // _id: string
 
     @PrimaryColumn()
     id: string
@@ -16,11 +16,11 @@ export class OrderEntity {
     desc: string
 
     // nullable date will be removed in production
-    @Column()
-    date?: string
+    @Column({nullable: true})
+    date: string
     
-    @Column()
-    shippingFee?: string
+    @Column({nullable: true})
+    shippingFee: string
 
     @Column()
     price: string
@@ -28,17 +28,17 @@ export class OrderEntity {
     @Column()
     url: string
     
-    @Column()
-    status?: string
+    @Column({nullable: true})
+    status: string
 
-    @Column()
-    weight?: string
+    @Column({nullable: true})
+    weight: string
     
     @Column()
     imageUrl: string
 
-    @Column()
-    payment?: string
+    @Column({nullable: true})
+    payment: string
 
     @Column()
     userId: string

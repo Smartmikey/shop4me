@@ -32,10 +32,20 @@ export class updateOrderInput {
     @Field( {nullable: true})
     status?: string
 
+    @Field( {nullable: true})
+    payment?: string
+
     @Field( type=> Float,{nullable: true})
     weight?: string
 
     @Field(type=> Float, {nullable: true})
     shippingFee?: string
+
+}
+
+@InputType()
+export class updateOrderPaymentInput {
+   @Field( {nullable: true})
+    payment?: string
 
 }

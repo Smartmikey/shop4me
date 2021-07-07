@@ -3,8 +3,8 @@ import { Column, Entity, ObjectIdColumn, PrimaryColumn, Unique } from "typeorm";
 @Entity()
 // @Unique(['email', 'username'])
 export class UserEntity {
-    @ObjectIdColumn()
-    _id: string;
+    // @ObjectIdColumn()
+    // _id: string;
 
     @PrimaryColumn()
     id: string;
@@ -12,11 +12,11 @@ export class UserEntity {
     @Column()
     email: string;
    
-    @Column()
+    @Column() 
     username: string;
 
-    @Column()
-    orders?: string[]
+    @Column("text", {array: true})
+    orders: string
 
     @Column()
     password: string;

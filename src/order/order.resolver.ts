@@ -5,7 +5,7 @@ import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { UserDetailsService } from 'src/user-details/user-details.service';
 import { UserService } from 'src/user/user.service';
 import { UserType } from 'src/user/user.type';
-import { OrderInput, updateOrderInput } from './order.input';
+import { OrderInput, updateOrderInput, updateOrderPaymentInput } from './order.input';
 import { OrderService } from './order.service';
 import { orderType, SuccessType } from './order.type';
 
@@ -59,6 +59,16 @@ export class OrderResolver {
     ){
         if(user.role !== "admin") throw new Error("You cannot update order status")
         return this.orderService.updateOrder(orderId, options)
+    }
+  
+    @Mutation(returns => orderType)
+    @UseGuards(GqlAuthGuard)
+    updateOrderPayment(
+        @CurrentUser() user: UserType,
+        @Args("orderId") orderId: string,
+        @Args("options", {nullable: true}) options: updateOrderPaymentInput
+    ){
+        return this.orderService.updateOrderPayment(orderId, options)
     }
 
     @Mutation(returns => SuccessType)

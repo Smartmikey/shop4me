@@ -2,7 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OrderEntity } from './order.entity';
-import { OrderInput, updateOrderInput } from './order.input';
+import { OrderInput, updateOrderInput, updateOrderPaymentInput } from './order.input';
 import { orderType } from './order.type';
 import {v4 as UUID} from 'uuid'
 import { UserService } from 'src/user/user.service';
@@ -74,13 +74,23 @@ export class OrderService {
     // this function helps the admin update the status of the order
     // I'll change this to enum later, but need to get everything working first
     async updateOrder(orderId: string, options: updateOrderInput) {
-        const {status, weight, shippingFee} = options
+        const {status, weight, shippingFee, payment} = options
 
         const order = await this.orderRepository.findOne({id:orderId})
 
         status != null && status != "" ? order.status = status : order.status
         weight != null && weight != "" ? order.weight = weight : order.weight
         shippingFee != null && shippingFee != "" ? order.shippingFee = shippingFee : order.shippingFee
+        payment != null && payment != "" ? order.payment = payment : order.payment
+
+        return this.orderRepository.save(order)
+    }
+   
+    async updateOrderPayment(orderId: string, options: updateOrderPaymentInput) {
+        const {payment} = options
+
+        const order = await this.orderRepository.findOne({id:orderId})
+        payment != null && payment != "" ? order.payment = payment : order.payment
 
         return this.orderRepository.save(order)
     }

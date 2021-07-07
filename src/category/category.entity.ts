@@ -3,8 +3,8 @@ import { Column, Entity, ObjectIdColumn, PrimaryColumn} from "typeorm";
 @Entity()
 
 export class CategoryEntity {
-    @ObjectIdColumn()
-    _id: string
+    // @ObjectIdColumn()
+    // _id: string
 
     @PrimaryColumn()
     id: string
@@ -15,7 +15,7 @@ export class CategoryEntity {
     @Column()
     slug: string
 
-    @Column()
-    stores?: string[]
+    @Column("text", {array: true, nullable: true})
+    stores: string
 
 }

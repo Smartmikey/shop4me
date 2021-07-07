@@ -31,7 +31,7 @@ export class UserService {
                 username: userInput.username,
                 email: lowerCaseEmail,
                 password: hashedPassword,
-                role: "user",
+                role: "Admin",
                 orders: [],
                 
                 
