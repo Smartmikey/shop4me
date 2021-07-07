@@ -21,10 +21,10 @@ import { TransactionEntity } from './transaction/transaction.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: "postgres",
-      url: "postgresql://localhost/shop4me?user=postgres&password=postgres", //process.env.DATABASE_URL,
+      type: "mongodb",
+      url:  process.env.DATABASE_URL,  //"mongodb://localhost/mongo",
       synchronize: true,
-      // useUnifiedTopology: true,
+      useUnifiedTopology: true,
       entities: [UserEntity, OrderEntity, StatusEntity, 
                   CategoryEntity, StoreEntity, userDetailsEntity, TransactionEntity]
     }),

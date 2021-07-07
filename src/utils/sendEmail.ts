@@ -17,7 +17,7 @@ export const  SendEmail= async (userEmail: String, name: String) => {
     // send mail with defined transport object
     let info = await transporter.sendMail({
       from: 'admin@smartmikey.com', // sender address
-      to: "donsmartez@gmail.com", // list of receivers
+      to: "sanmiakindipe@gmail.com", // list of receivers
       subject: "You got an order ✔", // Subject line
       text: "Hello world?", // plain text body
       html: `<h2>${userEmail} just placed an order</h2><p>Ordername ${name}</p>`, // html body
