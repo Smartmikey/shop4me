@@ -35,6 +35,8 @@ import { TransactionEntity } from './transaction/transaction.entity';
         maxFiles: 20,
         maxFieldSize: 200
       },
+      playground: true,
+      introspection: true,
       buildSchemaOptions: {
         dateScalarMode: 'isoDate',
       }
