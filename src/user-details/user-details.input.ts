@@ -17,7 +17,7 @@ export class UserDetailsInput {
     @Field({nullable: true})
     address: string
 
-    @Field(type=> Int, {nullable: true})
+    @Field( {nullable: true})
     phone: string
 
     @Field({nullable: true})
