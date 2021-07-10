@@ -20,7 +20,7 @@ export class UserDetailsType {
     @Field({nullable: true})
     address?: string
 
-    @Field(type=> Int, {nullable: true})
+    @Field({nullable: true})
     phone?: string
 
     @Field({nullable: true})
