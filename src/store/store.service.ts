@@ -67,7 +67,9 @@ export class StoreService {
     async getStoresByCategoryId(categoryId: string): Promise<StoreType[]> {
         return await this.storeRepository.find({
             where: {
-                categoryId
+                categoryId: {
+                    $in: categoryId
+                }
             }
         })
     }
