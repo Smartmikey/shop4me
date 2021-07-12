@@ -64,7 +64,6 @@ export class OrderResolver {
     @Mutation(returns => orderType)
     @UseGuards(GqlAuthGuard)
     updateOrderPayment(
-        @CurrentUser() user: UserType,
         @Args("orderId") orderId: string,
         @Args("options", {nullable: true}) options: updateOrderPaymentInput
     ){
