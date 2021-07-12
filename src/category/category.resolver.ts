@@ -53,7 +53,7 @@ export class CategoryResolver {
 
     @ResolveField()
     stores(@Parent() category: CategoryType){
-        return this.storeService.storesById(category.stores)
+        return this.storeService.getStoresByCategoryId(category.id)
     }
 
 }

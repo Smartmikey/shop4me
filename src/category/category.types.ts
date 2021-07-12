@@ -12,6 +12,6 @@ export class CategoryType {
     @Field()
     slug: string
 
-    @Field(type=> [StoreType])
+    @Field(type=> [StoreType], {nullable: true})
     stores?: string[]
 }
