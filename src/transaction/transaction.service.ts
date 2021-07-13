@@ -23,17 +23,17 @@ export class TransactionService {
     }
 
     async getTransactions (): Promise<TransactionType[]> {
-        return this.transactionRepository.find()
+        return await this.transactionRepository.find()
     }
     
     async getTransaction (id: string): Promise<TransactionType> {
-        return this.transactionRepository.findOne({id})
+        return await this.transactionRepository.findOne({id})
     }
 
     async deleteTransaction (id: string): Promise<SuccessType> {
 
         const transaction = await this.transactionRepository.findOne(id)
-        this.transactionRepository.remove(transaction)
+         this.transactionRepository.remove(transaction)
         return {
             message: "Successfully deleted"
         }

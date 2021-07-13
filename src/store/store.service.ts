@@ -68,7 +68,7 @@ export class StoreService {
         return await this.storeRepository.find({
             where: {
                 categoryId: {
-                    $in: categoryId
+                    in: categoryId
                 }
             }
         })
