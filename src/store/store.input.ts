@@ -15,8 +15,8 @@ export class storeInput {
     @Field()
     logoUrl: string
 
-    @Field(type=> [String])
-    categoryIds: string[]
+    // @Field(type=> [String])
+    // categoryIds: string[]
 }
 @InputType()
 export class UpdateStoreInput {

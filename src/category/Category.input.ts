@@ -1,9 +1,14 @@
 import { Field, ID, InputType } from "@nestjs/graphql";
+import { IsArray } from "class-validator";
 
 @InputType()
 export class CategoryInput {
     @Field()
     name: string
+    
+    @IsArray()
+    @Field(type => [String])
+    storeId: string[]
 }
 
 @InputType()
@@ -28,9 +33,7 @@ export class UpdateCategorySlugInput {
 
 @InputType()
 export class addStoreInput {
-    @Field()
-    id: string
-
-    @Field(type => ID)
-    storeId: string
+    
+    @Field(type => [String], {nullable: true})
+    storeId?: string[]
 }

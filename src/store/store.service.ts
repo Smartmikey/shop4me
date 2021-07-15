@@ -16,19 +16,19 @@ export class StoreService {
     ){}
 
     async createstore(options: storeInput): Promise<StoreType> {
-        let {name, url, logoUrl, categoryIds} = options
+        let {name, url, logoUrl, } = options
         
         const store = await this.storeRepository.findOne({where: {name}})
         console.log(store);
         
         if(store) throw new Error("This store name already exist")
-        categoryIds ? categoryIds : categoryIds = []
+        // categoryIds ? categoryIds : categoryIds = []
         const newstore =this.storeRepository.create({
             id: uuid(), 
             name: name.toLowerCase(),
             url: url.toLowerCase(),
            logoUrl,
-           categoryIds
+        //    categoryIds
         })
 
         // this.categoryService.addStore({
@@ -49,14 +49,14 @@ export class StoreService {
 
     async updatestore(id: string, options: UpdateStoreInput) : Promise<StoreType> {
 
-        const {name, url, logoUrl, categoryIds} = options
+        const {name, url, logoUrl, } = options
         let store = await this.storeRepository.findOne({id})
         name != "" && name  != null ? store.name = name : ""
         url != "" && url  != null ? store.url = url : ""
         logoUrl != "" && logoUrl != null ? store.logoUrl = logoUrl : ""
-        console.log("category received:", categoryIds);
+        // console.log("category received:", categoryIds);
         
-        categoryIds != [] && categoryIds  != null ? store.categoryIds = categoryIds : ""
+        // categoryIds != [] && categoryIds  != null ? store.categoryIds = categoryIds : ""
 
         return this.storeRepository.save(store)
     }
@@ -64,29 +64,39 @@ export class StoreService {
     async getStores(): Promise<StoreType[]> {
         return await this.storeRepository.find()
     }
-    async getStoresByCategoryId(categoryId: string): Promise<StoreType[]> {
-        return await this.storeRepository.find({
-            where: {
-                categoryId: {
-                    in: categoryId
-                }
-            }
-        })
-    }
+    // async getStoresByCategoryId(categoryId: string): Promise<StoreType[]> {
+    //     return await this.storeRepository.find({
+    //         where: {
+    //             categoryId
+    //         }
+    //     })
+    // }
 
     async getStore(id: string): Promise<StoreType> {
         return await this.storeRepository.findOne({id})
     }
 
-    async storesById(id: string[]): Promise<StoreType[]> {
-        const stores = this.storeRepository.find({
+    async getStoresById(storeId: string[]): Promise<StoreType[]> {
+        let store =  this.storeRepository.find({
             where: {
                 id: {
-                    $in: id
+                    $in: storeId
                 }
             }
         })
 
-        return stores
+        return store
     }
+
+    // async storesById(id: string[]): Promise<StoreType[]> {
+    //     const stores = this.storeRepository.find({
+    //         where: {
+    //             id: {
+    //                 $in: id
+    //             }
+    //         }
+    //     })
+
+    //     return stores
+    // }
 }

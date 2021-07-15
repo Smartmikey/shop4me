@@ -32,11 +32,16 @@ export class TransactionService {
 
     async deleteTransaction (id: string): Promise<SuccessType> {
 
-        const transaction = await this.transactionRepository.findOne(id)
-         this.transactionRepository.remove(transaction)
+        const transaction = await this.transactionRepository.findOne({id})
+         await this.transactionRepository.remove(transaction)
         return {
             message: "Successfully deleted"
         }
 
+    }
+
+    async TransactionByOrderId(orderId: string): Promise<Boolean> {
+        let isTransaction = await this.transactionRepository.findOne({orderId})
+        return isTransaction ? true : false
     }
 }

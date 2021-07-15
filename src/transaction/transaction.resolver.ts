@@ -1,4 +1,7 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { OrderService } from 'src/order/order.service';
+import { SuccessType } from 'src/order/order.type';
+import { UserService } from 'src/user/user.service';
 import { TransactionInput } from './transaction.input';
 import { TransactionService } from './transaction.service';
 import { TransactionType } from './transaction.type';
@@ -6,7 +9,9 @@ import { TransactionType } from './transaction.type';
 @Resolver(of=> TransactionType)
 export class TransactionResolver {
     constructor(
-        private transactionService: TransactionService
+        private transactionService: TransactionService,
+        private orderService: OrderService,
+        private userService: UserService
     ){}
 
     @Mutation(returns => TransactionType)
@@ -16,7 +21,7 @@ export class TransactionResolver {
         return this.transactionService.createTransaction(option)
     }
 
-    @Query(returns => TransactionType)
+    @Query(returns => [TransactionType])
     getTransactions (){
         return this.transactionService.getTransactions()
     }
@@ -28,10 +33,26 @@ export class TransactionResolver {
         return this.transactionService.getTransaction(id)
     }
 
-    @Query(returns => TransactionType)
+    @Mutation(returns => SuccessType)
     deleteTransaction (
         @Args("id") id: string,
     ){
         return this.transactionService.deleteTransaction(id)
+    }
+
+    @Query(returns => Boolean)
+    transactionByOrderId(
+        @Args("orderId") orderId: string
+    ){
+        return this.transactionService.TransactionByOrderId(orderId)
+    }
+
+    @ResolveField()
+    orderId(@Parent() transaction: TransactionType){
+        return this.orderService.getOrder(transaction.orderId)
+    }
+    @ResolveField()
+    userId(@Parent() transaction: TransactionType){
+        return this.userService.getUser(transaction.userId)
     }
 }

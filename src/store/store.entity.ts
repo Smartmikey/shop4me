@@ -18,7 +18,7 @@ export class StoreEntity {
     @Column()
     logoUrl: string
     
-    @Column()
-    categoryIds: string[]
+    // @Column()
+    // categoryIds: string[]
 
 }

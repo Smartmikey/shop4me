@@ -14,7 +14,7 @@ export class CategoryService {
     ){}
 
     async createCategory(options: CategoryInput): Promise<CategoryType> {
-        const {name} = options
+        const {name, storeId} = options
 
         const category = await this.categoryRepository.findOne({name})
 
@@ -24,7 +24,7 @@ export class CategoryService {
             id: uuid(), 
             name:name.toLowerCase(),
             slug: name.replace(/\s+/g, '-').toLowerCase(),
-            stores: []
+            stores: storeId 
         })
 
         return this.categoryRepository.save(newCategory)
@@ -60,26 +60,35 @@ export class CategoryService {
     async getCategories(): Promise<CategoryType[]> {
         return await this.categoryRepository.find()
     }
-    async getCategoriesById(id: string[]): Promise<CategoryType[]> {
-        return await this.categoryRepository.find({
-            where: {
-                id: {
-                    $in: id
-                }
-            }
-        })
-    }
+
+    // async getCategoriesById(id: string[]): Promise<CategoryType[]> {
+    //     return await this.categoryRepository.find({
+    //         where: {
+    //             id: {
+    //                 $in: id
+    //             }
+    //         }
+    //     })
+    // }
 
     async getCategory(id: string): Promise<CategoryType> {
         return await this.categoryRepository.findOne({id})
     }
 
-    async addStore(options: addStoreInput): Promise<CategoryType> {
-        const {id, storeId} = options
-        const category = await this.categoryRepository.findOne({id})
+    async updateStore(id: string, options: addStoreInput): Promise<CategoryType> {
+        const { storeId} = options
+        let category = await this.categoryRepository.findOne({id})
 
-        category.stores = [...category.stores, storeId]
+        category.stores = [ ...storeId]
+
+        // category.stores = [...new Set(tempArr)]
 
         return this.categoryRepository.save(category)
     }
+
+    // async removeStore(CategoryId: string, storeId: string): Promise <CategoryType> {
+    //     let category = await this.categoryRepository.findOne({id: CategoryId})
+
+    //     let tempArr = category.stores.filter(e => e != storeId)
+    // }
 }

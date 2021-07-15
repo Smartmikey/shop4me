@@ -47,9 +47,9 @@ export class StoreResolver {
         return this.storeService.getStore(id)
     }
 
-    @ResolveField()
-    async categoryIds(@Parent() store: StoreType){
-        return this.categoryService.getCategoriesById(store.categoryIds)
-    }
+    // @ResolveField()
+    // async categoryIds(@Parent() store: StoreType){
+    //     return this.categoryService.getCategoriesById(store.categoryIds)
+    // }
 
 }

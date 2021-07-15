@@ -16,7 +16,7 @@ export class StoreType {
     @Field({nullable: true})
     logoUrl?: string
 
-    @Field(type=> [CategoryType] ,{nullable: true})
-    categoryIds: string[]
+    // @Field(type=> [CategoryType] ,{nullable: true})
+    // categoryIds: string[]
 
 }
