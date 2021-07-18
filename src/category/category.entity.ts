@@ -18,4 +18,10 @@ export class CategoryEntity {
     @Column()
     stores?: string[]
 
+    @Column()
+    desc?: string
+
+    @Column()
+    imageUrl?: string
+
 }

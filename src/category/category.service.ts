@@ -14,7 +14,7 @@ export class CategoryService {
     ){}
 
     async createCategory(options: CategoryInput): Promise<CategoryType> {
-        const {name, storeId} = options
+        const {name, storeId, desc, imageUrl} = options
 
         const category = await this.categoryRepository.findOne({name})
 
@@ -24,7 +24,9 @@ export class CategoryService {
             id: uuid(), 
             name:name.toLowerCase(),
             slug: name.replace(/\s+/g, '-').toLowerCase(),
-            stores: storeId 
+            stores: storeId,
+            imageUrl,
+            desc 
         })
 
         return this.categoryRepository.save(newCategory)
@@ -73,6 +75,10 @@ export class CategoryService {
 
     async getCategory(id: string): Promise<CategoryType> {
         return await this.categoryRepository.findOne({id})
+    }
+
+    async getCategoryByName(slug: string): Promise<CategoryType> {
+        return await this.categoryRepository.findOne({slug})
     }
 
     async updateStore(id: string, options: addStoreInput): Promise<CategoryType> {

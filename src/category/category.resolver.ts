@@ -52,6 +52,13 @@ export class CategoryResolver {
         return this.categoryService.getCategory(id)
     }
 
+    @Query(returns=> CategoryType)
+    getCategoryByName(
+        @Args("slug") slug: string,
+    ){
+        return this.categoryService.getCategoryByName(slug)
+    }
+
     @Mutation(returns => CategoryType)
     updateCategoryStore(
         @Args("id") id: string,

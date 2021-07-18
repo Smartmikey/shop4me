@@ -14,4 +14,11 @@ export class CategoryType {
 
     @Field(type=> [StoreType])
     stores?: string[]
+
+    
+    @Field()
+    desc?: string
+
+    @Field()
+    imageUrl?: string
 }

@@ -6,6 +6,13 @@ export class CategoryInput {
     @Field()
     name: string
     
+    
+    @Field()
+    desc?: string
+
+    @Field()
+    imageUrl?: string
+
     @IsArray()
     @Field(type => [String])
     storeId: string[]
@@ -15,6 +22,9 @@ export class CategoryInput {
 export class UpdateCategoryInput {
     @Field()
     id: string 
+
+    @Field()
+    desc?: string
 
     @Field()
     name?: string 
