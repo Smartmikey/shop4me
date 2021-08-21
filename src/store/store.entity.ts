@@ -1,6 +1,6 @@
 import { Column, Entity, ObjectIdColumn } from "typeorm"
 
-@Entity()
+@Entity("Stores")
 export class StoreEntity {
     
     @ObjectIdColumn()

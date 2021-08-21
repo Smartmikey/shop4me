@@ -38,6 +38,24 @@ export class OrderService {
         await SendEmail("demo@email.com", order.name)
         return this.orderRepository.save(order)
     }
+    async createOrderForCart(user, options: OrderInput) : Promise<orderType> {
+        const {desc, name, url, price, imageUrl, date} = options
+        // let orderDate = ()=>  new Date(Date.now()).toUTCString()
+        const order = this.orderRepository.create({
+            id: UUID(),
+            ...options,
+            userId: user.id,
+            status: "processing",
+            payment: "not paid",
+            
+
+        })
+
+        // adding the order ID to the user who made the order
+        this.userService.addOrder(user.id, order.id)
+        // await SendEmail("demo@email.com", order.name)
+        return this.orderRepository.save(order)
+    }
 
     // Query all orders
     async getOrders(): Promise<orderType[]>{
@@ -55,6 +73,8 @@ export class OrderService {
             {status}
         )
     }
+
+    // async createMultipleOrder(options: any)
 
     // this function is used in the user.resolver file. it's supposed to 
     // return the orders a user made. even though it logs out well here, it still 
